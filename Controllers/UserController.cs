@@ -14,10 +14,12 @@ namespace fly_server.Controllers;
 public class UserController : Controller
 {
     private readonly IUserService _userService;
+    private readonly Auth _authHelper;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, Auth authHelper)
     {
         _userService = userService;
+        _authHelper = authHelper;
     }
 
     [HttpGet("getAllUsers")]
@@ -60,8 +62,15 @@ public class UserController : Controller
     [HttpPost("addUser")]
     public IActionResult AddUser(UserAddDto user)
     {
-        bool result = _userService.CreateUser(user);
-        if (!result)
+        byte[] hash = _authHelper.GeneratePasswordHash(user.Password, out byte[] salt);
+        if (hash.Equals(null))
+            return StatusCode(400, new ResponseModel()
+            {
+                StatusCode = 400,
+                StatusMessage = $"Failed! {ErrorMessages.ErrorMaps[ApiErrorKey.InternalServerError]}",
+            });
+        int result = _userService.CreateUser(user, hash, salt);
+        if (result == 0)
             return StatusCode(400, new ResponseModel()
             {
                 StatusCode = 400,

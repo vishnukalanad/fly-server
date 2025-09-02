@@ -11,5 +11,6 @@ public static class ErrorMessages
         { ApiErrorKey.DeleteUserFailed, "Delete user failed!" },
         { ApiErrorKey.UserNotFound, "User(s) not found!" },
         { ApiErrorKey.InvalidCaptcha, "Invalid captcha!" },
+        { ApiErrorKey.InternalServerError, "Internal server error!" },
     };
 }

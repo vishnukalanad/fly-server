@@ -1,3 +1,4 @@
+using fly_server.Helpers;
 using fly_server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<Auth>();
 
 var app = builder.Build();
 

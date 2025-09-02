@@ -8,7 +8,7 @@ public interface IUserService
 {
     public IEnumerable<User> GetUsers();
     public User GetUserById(int id);
-    public bool CreateUser(UserAddDto user);
+    public int CreateUser(UserAddDto user, byte[] passwordHash, byte[] passwordSalt);
     public bool UpdateUser(UserAddDto user);
     public bool DeleteUser(int id);
     public bool ChangeUserStatus(int id, bool status);

@@ -17,6 +17,8 @@ public class UserService : IUserService
 
     private readonly string _removeCaptcha = $"delete from FlyDbSchema.Captcha where captchaId = @CaptchaId";
     private readonly string _recaptchaQuery = $"update FlyDbSchema.Captcha set captchaString = @Captcha  where captchaId = @CaptchaId";
+    
+    private readonly string _insertUser = $"exec FlyDbSchema.spRegisterUser_Upsert @FirstName, @LastName, @Email, @PasswordHash, @PasswordSalt, @Gender, @DateOfBirth, @Address, @City, @State, @Country, @Phone";
 
     public UserService(IConfiguration config)
     {
@@ -33,9 +35,30 @@ public class UserService : IUserService
         return new();
     }
 
-    public bool CreateUser(UserAddDto user)
+    public int CreateUser(UserAddDto user, byte[] passwordHash, byte[] paswordSalt)
     {
-        return false;
+        DateTime dob;
+        if (!DateTime.TryParse(user.DateOfBirth, out dob))
+        {
+            throw new Exception("Date of birth is not valid");
+        }
+        var parameters = new
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            PasswordHash = passwordHash,
+            PasswordSalt = paswordSalt,
+            Gender = user.Gender,
+            DateOfBirth = dob,
+            Address = user.Address,
+            City = user.City,
+            State = user.State,
+            Country = user.Country,
+            Phone = user.Phone,
+        };
+        int result = _dapper.ExecuteQuery(_insertUser, parameters);
+        return result;
     }
 
     public bool UpdateUser(UserAddDto user)

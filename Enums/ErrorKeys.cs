@@ -7,4 +7,5 @@ public enum ApiErrorKey
     DeleteUserFailed,
     CreateUserFailed,
     InvalidCaptcha,
+    InternalServerError,
 }
