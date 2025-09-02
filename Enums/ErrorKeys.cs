@@ -11,4 +11,5 @@ public enum ApiErrorKey
     InvalidCredentials,
     NoDataFound,
     DestinationAddFailed,
+    DestinationDeleteFailed,
 }

@@ -51,4 +51,22 @@ public class DestinationController : ControllerBase
             Body = $"Successfully inserted {result.ToString()} record(s)"
         });
     }
+
+    [HttpDelete("deleteDestination")]
+    public IActionResult DeleteDestination(int id)
+    {
+        int result = _destinationService.DeleteDestination(id);
+        if (result == 0) return StatusCode(500, new ResponseModel()
+        {
+            StatusCode = 500,
+            StatusMessage = $"Failed! {ErrorMessages.ErrorMaps[ApiErrorKey.DestinationAddFailed]}"
+        });
+
+        return Ok(new ResponseModel()
+        {
+            StatusCode = 200,
+            StatusMessage = $"Success",
+            Body = $"Successfully deleted {result.ToString()} record(s)"
+        });
+    }
 }

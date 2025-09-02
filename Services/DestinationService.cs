@@ -15,6 +15,8 @@ public class DestinationService : IDestinationService
 
     private readonly string _getDestinations = $"exec FlyDbSchema.spGetTags_Proc @Location, @Name";
 
+    private readonly string _deleteDestination = $"exec FlyDbSchema.spDelete_Destination @Id";
+
     // SQL Queries end
     public DestinationService(IConfiguration config)
     {
@@ -42,6 +44,7 @@ public class DestinationService : IDestinationService
 
     public int DeleteDestination(int id)
     {
-        return 0;
+        int results = _dataContext.ExecuteQuery(_deleteDestination, new { Id = id });
+        return results;
     }
 }
