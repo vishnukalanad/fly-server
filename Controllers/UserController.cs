@@ -4,11 +4,13 @@ using fly_server.Enums;
 using fly_server.Helpers;
 using fly_server.Models;
 using fly_server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace fly_server.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UserController : Controller
@@ -57,12 +59,12 @@ public class UserController : Controller
             Body = user
         });
     }
-
-
+    
+    [AllowAnonymous]
     [HttpPost("addUser")]
     public IActionResult AddUser(UserAddDto user)
     {
-        byte[] hash = _authHelper.GeneratePasswordHash(user.Password, out byte[] salt);
+        byte[] hash = _authHelper.GeneratePasswordHashAndSalt(user.Password, out byte[] salt);
         if (hash.Equals(null))
             return StatusCode(400, new ResponseModel()
             {
@@ -83,6 +85,7 @@ public class UserController : Controller
         });
     }
 
+    [AllowAnonymous]
     [HttpGet("getCaptcha")]
     public IActionResult GetCaptcha()
     {
@@ -99,6 +102,7 @@ public class UserController : Controller
         });
     }
     
+    [AllowAnonymous]
     [HttpPost("validateCaptcha")]
     public IActionResult ValidateCaptcha(CaptchaValidateDto request)
     {
@@ -115,6 +119,7 @@ public class UserController : Controller
         });
     }
     
+    [AllowAnonymous]
     [HttpGet("reCaptcha")]
     public IActionResult ReCaptcha(string captchaId)
     {

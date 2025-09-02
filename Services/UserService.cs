@@ -10,13 +10,13 @@ public class UserService : IUserService
     private readonly DataContext _dapper;
 
     private readonly string _insertCaptcha =
-        $"insert into FlyDbSchema.Captcha(captchaId, captchaString) values (@CaptchaId, @CaptchaString)";
+        $"insert into FlyDbSchema.Captcha(CaptchaId, CaptchaString) values (@CaptchaId, @CaptchaString)";
 
     private readonly string _retrieveCaptcha =
-        $"select captchaString from FlyDbSchema.Captcha where captchaId = @CaptchaId";
+        $"select captchaString from FlyDbSchema.Captcha where CaptchaId = @CaptchaId";
 
-    private readonly string _removeCaptcha = $"delete from FlyDbSchema.Captcha where captchaId = @CaptchaId";
-    private readonly string _recaptchaQuery = $"update FlyDbSchema.Captcha set captchaString = @Captcha  where captchaId = @CaptchaId";
+    private readonly string _removeCaptcha = $"delete from FlyDbSchema.Captcha where CaptchaId = @CaptchaId";
+    private readonly string _recaptchaQuery = $"update FlyDbSchema.Captcha set CaptchaString = @Captcha  where CaptchaId = @CaptchaId";
     
     private readonly string _insertUser = $"exec FlyDbSchema.spRegisterUser_Upsert @FirstName, @LastName, @Email, @PasswordHash, @PasswordSalt, @Gender, @DateOfBirth, @Address, @City, @State, @Country, @Phone";
 
