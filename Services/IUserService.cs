@@ -1,3 +1,5 @@
+using fly_server.DTOs;
+using fly_server.Helpers;
 using fly_server.Models;
 
 namespace fly_server.Services;
@@ -5,5 +7,12 @@ namespace fly_server.Services;
 public interface IUserService
 {
     public IEnumerable<User> GetUsers();
-    public User GetUser(int id);
+    public User GetUserById(int id);
+    public bool CreateUser(UserAddDto user);
+    public bool UpdateUser(UserAddDto user);
+    public bool DeleteUser(int id);
+    public bool ChangeUserStatus(int id, bool status);
+    public string GetCaptcha(out string captchaId);
+    public bool ValidateCaptcha(CaptchaValidateDto request);
+    public string ReCaptcha(string captchaId);
 }
