@@ -12,5 +12,6 @@ public static class ErrorMessages
         { ApiErrorKey.UserNotFound, "User(s) not found!" },
         { ApiErrorKey.InvalidCaptcha, "Invalid captcha!" },
         { ApiErrorKey.InternalServerError, "Internal server error!" },
+        { ApiErrorKey.InvalidCredentials, "Invalid username/password!" },
     };
 }

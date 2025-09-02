@@ -25,9 +25,10 @@ public class UserController : Controller
     }
 
     [HttpGet("getAllUsers")]
-    public IActionResult GetUsers()
+    [AllowAnonymous]
+    public IActionResult GetUsers(string? email)
     {
-        IEnumerable<User> users = _userService.GetUsers();
+        IEnumerable<User> users = _userService.GetUsers(email ?? null);
         if (users.IsNullOrEmpty())
             return StatusCode(400,
                 new ResponseModel()
@@ -39,24 +40,6 @@ public class UserController : Controller
             StatusCode = 200,
             StatusMessage = "Success",
             Body = users
-        });
-    }
-
-    [HttpGet("getUserById")]
-    public IActionResult GetUserById(int id)
-    {
-        User user = _userService.GetUserById(id);
-        if (user.Equals(null))
-            return StatusCode(400,
-                new ResponseModel()
-                {
-                    StatusCode = 400, StatusMessage = $"Failed! {ErrorMessages.ErrorMaps[ApiErrorKey.UserNotFound]}"
-                });
-        return Ok(new ResponseModel()
-        {
-            StatusCode = 200,
-            StatusMessage = $"Success",
-            Body = user
         });
     }
     

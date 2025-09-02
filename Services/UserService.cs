@@ -20,21 +20,21 @@ public class UserService : IUserService
     
     private readonly string _insertUser = $"exec FlyDbSchema.spRegisterUser_Upsert @FirstName, @LastName, @Email, @PasswordHash, @PasswordSalt, @Gender, @DateOfBirth, @Address, @City, @State, @Country, @Phone";
 
+    private readonly string _getUser = $"exec FlyDbSchema.spGetUsers @Email";
+
     public UserService(IConfiguration config)
     {
         _dapper = new(config);
     }
 
-    public IEnumerable<User> GetUsers()
+    public IEnumerable<User> GetUsers(string? email)
     {
-        return [];
+        return _dapper.LoadData<User>(_getUser, new
+        {
+            email = email ?? null,
+        });
     }
-
-    public User GetUserById(int id)
-    {
-        return new();
-    }
-
+    
     public int CreateUser(UserAddDto user, byte[] passwordHash, byte[] paswordSalt)
     {
         DateTime dob;

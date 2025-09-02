@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("fly_server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae112ae62c1b5968d21339a4e293769a92bd5eb4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e0afc50ded1aab472ab33a6005af1097c1ebdf6")]
 [assembly: System.Reflection.AssemblyProductAttribute("fly_server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("fly_server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,8 +6,7 @@ namespace fly_server.Services;
 
 public interface IUserService
 {
-    public IEnumerable<User> GetUsers();
-    public User GetUserById(int id);
+    public IEnumerable<User> GetUsers(string? email);
     public int CreateUser(UserAddDto user, byte[] passwordHash, byte[] passwordSalt);
     public bool UpdateUser(UserAddDto user);
     public bool DeleteUser(int id);
