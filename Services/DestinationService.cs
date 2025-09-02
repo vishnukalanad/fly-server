@@ -4,22 +4,35 @@ using fly_server.Models;
 
 namespace fly_server.Services;
 
-public class DestinationService: IDestinationService
+public class DestinationService : IDestinationService
 {
     private readonly DataContext _dataContext;
-    public DestinationService(DataContext dataContext)
+
+    // SQL Queries begin;
+
+    private readonly string _insertDestination =
+        $"insert into FlyDbSchema.Destinations (Name, Description, Location, Price, Image, AnnualVisitors) values (@Name, @Description, @Location, @Price, @Image, @AnnualVisitors)";
+
+    private readonly string _getDestinations = $"exec FlyDbSchema.spGetTags_Proc @Location, @Name";
+
+    // SQL Queries end
+    public DestinationService(IConfiguration config)
     {
-        _dataContext = dataContext;
+        _dataContext = new(config);
     }
 
-    public IEnumerable<DestinationModel> GetAllTrips(string? name, string? description)
+    public IEnumerable<DestinationModel> GetAllDestinations(string? name, string? location)
     {
-        return [];
+        return _dataContext.LoadData<DestinationModel>(_getDestinations, new
+        {
+            Name = name ?? null,
+            Location = location ?? null,
+        });
     }
 
     public int InsertDestination(DestinationDto request)
     {
-        return 0;
+        return _dataContext.ExecuteQuery(_insertDestination, request);
     }
 
     public int UpdateDestination(DestinationDto request)

@@ -7,5 +7,5 @@ public partial class DestinationDto
     public string Location { get; set; } = "";
     public decimal Price { get; set; } = 0;
     public string Image { get; set; } = "";
-    public int AnnualVisits { get; set; } = 0;
+    public int AnnualVisitors { get; set; } = 0;
 }

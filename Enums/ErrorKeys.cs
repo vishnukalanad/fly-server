@@ -8,5 +8,7 @@ public enum ApiErrorKey
     CreateUserFailed,
     InvalidCaptcha,
     InternalServerError,
-    InvalidCredentials
+    InvalidCredentials,
+    NoDataFound,
+    DestinationAddFailed,
 }

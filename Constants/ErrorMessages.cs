@@ -13,5 +13,7 @@ public static class ErrorMessages
         { ApiErrorKey.InvalidCaptcha, "Invalid captcha!" },
         { ApiErrorKey.InternalServerError, "Internal server error!" },
         { ApiErrorKey.InvalidCredentials, "Invalid username/password!" },
+        { ApiErrorKey.NoDataFound, "No data found!" },
+        { ApiErrorKey.DestinationAddFailed, "Failed to  add destination!" },
     };
 }
