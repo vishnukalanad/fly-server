@@ -79,7 +79,7 @@ public class UserService : IUserService
         if (request.Captcha != captchaFromTable) return false;
         return true;
     }
-
+    // reCaptcha -> to update the captcha string without creating a new table entry;
     public string ReCaptcha(string captchaId)
     {
         var captchaGenerator = new CaptchaGenerator();

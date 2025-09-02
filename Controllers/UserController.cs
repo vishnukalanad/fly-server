@@ -58,9 +58,9 @@ public class UserController : Controller
 
 
     [HttpPost("addUser")]
-    public IActionResult AddUser([FromBody] User user)
+    public IActionResult AddUser(UserAddDto user)
     {
-        bool result = _userService.CreateUser(new());
+        bool result = _userService.CreateUser(user);
         if (!result)
             return StatusCode(400, new ResponseModel()
             {
