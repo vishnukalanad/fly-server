@@ -27,10 +27,33 @@ public class DataContext
     }
 
     // Operational queries;
-    public int ExecuteQuery(string sql, object parameters)
+    public int ExecuteQuery(string sql, object parameters, bool sp = false, string? spName = null)
     {
+        CommandType commandType = sp ? CommandType.StoredProcedure : CommandType.Text;
         IDbConnection con= new SqlConnection(_connectionString);
-        return con.Execute(sql, parameters);
+        // return con.Execute(sql, parameters);
+        using var cmd = new SqlCommand(sql, (SqlConnection)con);
+        cmd.CommandType = commandType;
+
+        if (!parameters.Equals(null))
+        {
+            foreach (var prop in parameters.GetType().GetProperties())
+            {
+                var value  = prop.GetValue(parameters);
+                if (value is DataTable dt)
+                {
+                    var param = cmd.Parameters.Add($"{prop.Name}", SqlDbType.Structured);
+                    param.TypeName = spName ?? "";
+                    param.Value = dt;
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue($"{prop.Name}", value ?? DBNull.Value);
+                }
+            }
+        }
+        con.Open();
+        return cmd.ExecuteNonQuery();
     }
     
     // Execute iterable queries;

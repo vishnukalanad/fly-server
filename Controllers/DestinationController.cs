@@ -20,6 +20,16 @@ public class DestinationController : ControllerBase
     public IActionResult GetDestinations(string? name, string? location)
     {
         IEnumerable<DestinationModel> results = _destinationService.GetAllDestinations(name, location);
+        IEnumerable<DestinationModelOut> outputModel = results.Select(r => new DestinationModelOut()
+        {
+            Name = r.Name,
+            Description = r.Description,
+            Location = r.Location,
+            Price = r.Price,
+            Image = r.Image,
+            AnnualVisits = r.AnnualVisits,
+            Tags = r.Tags.Trim().Split(",").ToList()
+        });
         if(!results.Any()) return NotFound(new ResponseModel()
         {
             StatusCode = 200,
@@ -30,14 +40,15 @@ public class DestinationController : ControllerBase
         {
             StatusCode = 200,
             StatusMessage = $"Success",
-            Body = results
+            Body = outputModel
         });
     }
 
     [HttpPost("createDestination")]
     public IActionResult AddDestination(DestinationDto request)
     {
-        int result = _destinationService.InsertDestination(request);
+        string[] tags = request.Tags.Trim().Split(',');
+        int result = _destinationService.InsertDestination(request, tags);
         if (result == 0)
             return BadRequest(new ResponseModel()
             {

@@ -8,4 +8,5 @@ public partial class DestinationDto
     public decimal Price { get; set; } = 0;
     public string Image { get; set; } = "";
     public int AnnualVisitors { get; set; } = 0;
+    public string Tags { get; set; } = "";
 }

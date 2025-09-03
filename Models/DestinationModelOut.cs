@@ -1,6 +1,6 @@
 namespace fly_server.Models;
 
-public partial class DestinationModel
+public partial class DestinationModelOut
 {
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";
@@ -8,5 +8,5 @@ public partial class DestinationModel
     public decimal Price { get; set; } = 0;
     public string Image { get; set; } = "";
     public int AnnualVisits { get; set; } = 0;
-    public string Tags { get; set; } = "";
+    public List<string> Tags { get; set; } = [];
 }

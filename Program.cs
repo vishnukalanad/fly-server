@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text;
 using fly_server.Helpers;
 using fly_server.Services;
@@ -17,6 +18,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<Auth>();
+builder.Services.AddScoped<DataTableGenerator>();
 
 
 // ***** Bearer Token Config *****
