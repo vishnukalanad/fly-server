@@ -16,5 +16,6 @@ public static class ErrorMessages
         { ApiErrorKey.NoDataFound, "No data found!" },
         { ApiErrorKey.DestinationAddFailed, "Failed to  add destination!" },
         { ApiErrorKey.DestinationDeleteFailed, "Failed to  delete destination!" },
+        { ApiErrorKey.DestinationUpdateFailed, "Failed to  update destination!" },
     };
 }

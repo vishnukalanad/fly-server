@@ -30,9 +30,9 @@ public class DataContext
     public int ExecuteQuery(string sql, object parameters, bool sp = false, string? spName = null)
     {
         CommandType commandType = sp ? CommandType.StoredProcedure : CommandType.Text;
-        IDbConnection con= new SqlConnection(_connectionString);
+        var con = new SqlConnection(_connectionString);
         // return con.Execute(sql, parameters);
-        using var cmd = new SqlCommand(sql, (SqlConnection)con);
+        using var cmd = new SqlCommand(sql, con);
         cmd.CommandType = commandType;
 
         if (!parameters.Equals(null))
@@ -42,13 +42,13 @@ public class DataContext
                 var value  = prop.GetValue(parameters);
                 if (value is DataTable dt)
                 {
-                    var param = cmd.Parameters.Add($"{prop.Name}", SqlDbType.Structured);
-                    param.TypeName = spName ?? "";
+                    var param = cmd.Parameters.Add($"@{prop.Name}", SqlDbType.Structured);
+                    param.TypeName = spName ?? throw new ArgumentNullException(nameof(spName));
                     param.Value = dt;
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue($"{prop.Name}", value ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue($"@{prop.Name}", value ?? DBNull.Value);
                 }
             }
         }

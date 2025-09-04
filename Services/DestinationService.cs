@@ -38,11 +38,12 @@ public class DestinationService : IDestinationService
         });
     }
 
-    public int InsertDestination(DestinationDto request, string[] tags)
+    public int InsertUpdateDestination(DestinationDto request, string[] tags)
     {
         DataTable tagsDataTable = _dataTableGenerator.CreateDataTableValues("Tag", tags);
         return _dataContext.ExecuteQuery(_insertDestination, new
         {
+            Id = request.Id,
             Name = request.Name,
             Description = request.Description,
             Location = request.Location,
@@ -52,12 +53,7 @@ public class DestinationService : IDestinationService
             Tags = tagsDataTable,
         }, true, "FlyDbSchema.TagTableType");
     }
-
-    public int UpdateDestination(DestinationDto request)
-    {
-        return 0;
-    }
-
+    
     public int DeleteDestination(int id)
     {
         int results = _dataContext.ExecuteQuery(_deleteDestination, new { Id = id });

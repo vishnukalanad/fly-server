@@ -14,4 +14,5 @@ public interface IUserService
     public string GetCaptcha(out string captchaId);
     public bool ValidateCaptcha(CaptchaValidateDto request);
     public string ReCaptcha(string captchaId);
+    
 }

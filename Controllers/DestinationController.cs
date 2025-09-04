@@ -22,6 +22,7 @@ public class DestinationController : ControllerBase
         IEnumerable<DestinationModel> results = _destinationService.GetAllDestinations(name, location);
         IEnumerable<DestinationModelOut> outputModel = results.Select(r => new DestinationModelOut()
         {
+            Id = r.Id,
             Name = r.Name,
             Description = r.Description,
             Location = r.Location,
@@ -43,12 +44,13 @@ public class DestinationController : ControllerBase
             Body = outputModel
         });
     }
+    
 
     [HttpPost("createDestination")]
     public IActionResult AddDestination(DestinationDto request)
     {
         string[] tags = request.Tags.Trim().Split(',');
-        int result = _destinationService.InsertDestination(request, tags);
+        int result = _destinationService.InsertUpdateDestination(request, tags);
         if (result == 0)
             return BadRequest(new ResponseModel()
             {
@@ -59,7 +61,7 @@ public class DestinationController : ControllerBase
         {
             StatusCode = 200,
             StatusMessage = $"Success",
-            Body = $"Successfully inserted {result.ToString()} record(s)"
+            Body = $"Successfully inserted/updated {result.ToString()} record(s)"
         });
     }
 
