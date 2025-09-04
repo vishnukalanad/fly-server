@@ -27,7 +27,7 @@ public class DataContext
     }
 
     // Operational queries;
-    public int ExecuteQuery(string sql, object parameters, bool sp = false, string? spName = null)
+    public int ExecuteQuery(string sql, object parameters, bool sp = false, string? tvpName = null)
     {
         CommandType commandType = sp ? CommandType.StoredProcedure : CommandType.Text;
         var con = new SqlConnection(_connectionString);
@@ -43,7 +43,7 @@ public class DataContext
                 if (value is DataTable dt)
                 {
                     var param = cmd.Parameters.Add($"@{prop.Name}", SqlDbType.Structured);
-                    param.TypeName = spName ?? throw new ArgumentNullException(nameof(spName));
+                    param.TypeName = tvpName ?? throw new ArgumentNullException(nameof(tvpName));
                     param.Value = dt;
                 }
                 else

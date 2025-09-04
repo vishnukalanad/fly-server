@@ -79,7 +79,7 @@ public class DestinationController : ControllerBase
         {
             StatusCode = 200,
             StatusMessage = $"Success",
-            Body = $"Successfully deleted {result.ToString()} record(s)"
+            Body = $"Successfully deleted record(s)"
         });
     }
 }

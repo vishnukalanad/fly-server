@@ -12,5 +12,7 @@ public enum ApiErrorKey
     NoDataFound,
     DestinationAddFailed,
     DestinationDeleteFailed,
-    DestinationUpdateFailed
+    DestinationUpdateFailed,
+    FailedToInsertAirline,
+    FailedToUpdateAirline,
 }

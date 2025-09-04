@@ -17,5 +17,7 @@ public static class ErrorMessages
         { ApiErrorKey.DestinationAddFailed, "Failed to  add destination!" },
         { ApiErrorKey.DestinationDeleteFailed, "Failed to  delete destination!" },
         { ApiErrorKey.DestinationUpdateFailed, "Failed to  update destination!" },
+        { ApiErrorKey.FailedToInsertAirline, "Failed to insert airline!" },
+        { ApiErrorKey.FailedToUpdateAirline, "Failed to  update airline!" },
     };
 }

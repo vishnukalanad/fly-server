@@ -1,8 +1,8 @@
 namespace fly_server.Models;
 
-public partial class AirlineModel
+public partial class AirlineDto
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string AirlineName { get; set; } = "";
     public string Country { get; set; } = "";
     public string Code { get; set; } = "";
