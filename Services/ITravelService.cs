@@ -6,7 +6,7 @@ public interface ITravelService
 {
     // Airline endpoints;
     public int InsertUpdateAirline(AirlineDto airline);
-    public int DeleteAirline(string id);
+    public int DeleteAirline(int id);
     public IEnumerable<AirlineModel> GetAirlines(string? name);
     
     // Trip endpoints;

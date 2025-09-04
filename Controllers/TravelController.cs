@@ -56,5 +56,24 @@ public class TravelController : ControllerBase
             StatusMessage = $"Successfully added airline.",
         });
     }
+
+    [HttpDelete("deleteAirline")]
+    public IActionResult DeleteAirline(int id)
+    {
+        int result = _travelService.DeleteAirline(id);
+        if (result == 0)
+            return BadRequest(new ResponseModel()
+            {
+                StatusCode = 400,
+                StatusMessage =
+                    ErrorMessages.ErrorMaps[ApiErrorKey.FailedToDeleteAirline],
+
+            });
+        return Ok(new ResponseModel()
+        {
+            StatusCode = 200,
+            StatusMessage = $"Successfully deleted airline.",
+        });
+    }
     
 }

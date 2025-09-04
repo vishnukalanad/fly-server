@@ -10,7 +10,7 @@ public class TravelService : ITravelService
     // SQL Statements;
 
     private readonly string _insertUpdateAirline = "FlyDbSchema.spAddAirlines";
-    private readonly string _deleteAirline = "";
+    private readonly string _deleteAirline = "FlyDbSchema.spDeleteAirline";
     private readonly string _getAirlines = "FlyDbSchema.spGetAirlines";
     
     private readonly string _insertUpdateTrip = "";
@@ -43,14 +43,12 @@ public class TravelService : ITravelService
         }, true);
     }
 
-    public int UpdateAirline(AirlineModel airline)
+    public int DeleteAirline(int id)
     {
-        throw new NotImplementedException();
-    }
-
-    public int DeleteAirline(string id)
-    {
-        throw new NotImplementedException();
+        return _dapper.ExecuteQuery(_deleteAirline, new
+        {
+            Id = id
+        }, true);
     }
 
     public IEnumerable<AirlineModel> GetAirlines(string? name)
