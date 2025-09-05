@@ -1,3 +1,4 @@
+using System.Data;
 using fly_server.Data;
 using fly_server.Models;
 
@@ -16,8 +17,9 @@ public class TravelService : ITravelService
     private readonly string _insertUpdateTrip = "";
     private readonly string _deleteTrip = "";
     
-    private readonly string _insertUpdateHotel = "";
-    private readonly string _deleteHotel = "";
+    private readonly string _insertUpdateHotel = "FlyDbSchema.spAddUpdateHotels";
+    private readonly string _deleteHotel = "FlyDbSchema.spDeleteHotel";
+    private readonly string _getHotels = "FlyDbSchema.spGetHotel";
     
     // SQL Statements end;
     
@@ -56,13 +58,40 @@ public class TravelService : ITravelService
         return _dapper.LoadData<AirlineModel>(_getAirlines, new { Name = name });
     }
     
-    // Trip services;
-    public int InsertUpdateTrip(TripModel trip)
+    // Hotel service;
+    public int InsertUpdateHotel(HotelDto hotel, DataTable amenities)
     {
-        throw new NotImplementedException();
+        return _dapper.ExecuteQuery(_insertUpdateHotel, new
+        {
+            Id = hotel.Id ?? null,
+            Name = hotel.Name,
+            Description = hotel.Description,
+            Latitude = hotel.Latitude,
+            Longitude = hotel.Longitude,
+            City = hotel.City,
+            Country = hotel.Country,
+            Rating = hotel.Rating,
+            Image = hotel.Image,
+            Price = hotel.Price,
+            Amenities = amenities,
+        },  true, "FlyDbSchema.AmenityTableType");
     }
 
-    public int UpdateTrip(TripModel trip)
+    public int DeleteHotel(int id)
+    {
+        return _dapper.ExecuteQuery(_deleteHotel, new
+        {
+            Id = id
+        }, true);
+    }
+
+    public IEnumerable<HotelModel> GetHotels(string? name)
+    {
+        return _dapper.LoadJson<HotelModel>(_getHotels, new { Name = name });
+    }
+    
+    // Trip services;
+    public int InsertUpdateTrip(TripModel trip)
     {
         throw new NotImplementedException();
     }
@@ -73,27 +102,6 @@ public class TravelService : ITravelService
     }
 
     public IEnumerable<TripModel> GetTrips()
-    {
-        throw new NotImplementedException();
-    }
-    
-    // Hotel service;
-    public int InsertUpdateHotel(HotelModel hotel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int UpdateHotel(HotelModel hotel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public int DeleteHotel(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<HotelModel> GetHotels()
     {
         throw new NotImplementedException();
     }

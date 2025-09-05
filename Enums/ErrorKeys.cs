@@ -16,4 +16,5 @@ public enum ApiErrorKey
     FailedToInsertAirline,
     FailedToUpdateAirline,
     FailedToDeleteAirline,
+    FailedToDeleteHotel,
 }

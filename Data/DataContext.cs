@@ -1,6 +1,8 @@
 using System.Data;
+using System.Text.Json;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 
 namespace fly_server.Data;
 
@@ -18,6 +20,19 @@ public class DataContext
         IDbConnection con= new SqlConnection(_connectionString);
         return con.Query<T>(sql, parameters);
     }
+    
+    // JSON Path outputs
+    public IEnumerable<T> LoadJson<T>(string sql, object parameters)
+    {
+        using var con = new SqlConnection(_connectionString);
+        var jsonString = con.QuerySingleOrDefault<string>(sql, parameters);
+        if (string.IsNullOrWhiteSpace(jsonString))
+        {
+            return [];
+        }
+        return JsonSerializer.Deserialize<IEnumerable<T>>(jsonString) ?? [];
+    }
+
     
     // Query single;
     public T LoadSingleDatum<T>(string sql, object parameters)

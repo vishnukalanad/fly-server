@@ -21,4 +21,27 @@ public class DataTableGenerator
         
         return table;
     }
+
+    public DataTable CreateNestedDataTable<T>(IEnumerable<T> items)
+    {
+        var table = new DataTable();
+        var props = typeof(T).GetProperties();
+        foreach (var prop in props) 
+        {
+            var propType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+            table.Columns.Add(prop.Name, propType);
+        }
+
+        foreach (var item in items)
+        {
+            var values = new object[props.Length]; 
+            for (int i = 0; i < props.Length; i++)
+            {
+                values[i] = props[i].GetValue(item) ?? DBNull.Value;
+            }
+            table.Rows.Add(values);
+        }
+        
+        return table;
+    }
 }
